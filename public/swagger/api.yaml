@@ -1,0 +1,1295 @@
+swagger: "2.0.0"
+host: 20.244.113.183:4040
+info:
+  title: MEAN Sample APIS
+  description: Login and Singnup Apis for the api documentation
+  version: 2.0.0
+  contact:
+    email: choudharysidharth082000@gmail.com
+
+schemes: [http, https]
+
+paths:
+  /api/v1/test:
+    get:
+      tags:
+        - name: Test API
+      summary: Test Api
+      description: Return HEllo world
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login Api
+      description: Api for the user to log in
+      parameters:
+        - name: authBody
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            properties:
+              Status:
+                type: string
+              Message:
+                type: string
+              Access-Token:
+                type: string
+  /v1/api/auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Signup Api
+      description: Api for the user to signup in
+      parameters:
+        - name: authBody
+          in: body
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+              password:
+                type: string
+              username:
+                type: string
+              userType:
+                type: string
+                default: Student
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            properties:
+              Status:
+                type: string
+              Message:
+                type: string
+              Access-Token:
+                type: string
+  /v1/api/auth/forgotPassword:
+    post:
+      tags:
+        - Auth
+      summary: Forgot Password
+      description: Api for the user to forgot Password
+      parameters:
+        - name: email
+          in: path
+          type: string
+          required: true
+      responses:
+        200:
+          description: ok
+          schema:
+            type: object
+            properties:
+              Status:
+                type: string
+              Message:
+                type: string
+              Access-Token:
+                type: string
+  # /v1/api/profile/getProfile/{id}:
+  #   get:
+  #     tags:
+  #       - Profile
+  #     summary: Get Profile By ID
+  #     description: Api for getting the information about the profile
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/profile/deleteProfile/{userID}:
+  #   delete:
+  #     tags:
+  #       - Profile
+  #     summary: Delete Profile By ID
+  #     description: Api for the user to forgot Password
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/profile/deleteAllProfile:
+  #   delete:
+  #     tags:
+  #       - Profile
+  #     summary: Delete All Profile
+  #     description: Api for the user to forgot Password
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/profile/updateProfile/{userID}:
+  #   put:
+  #     tags:
+  #       - Profile
+  #     summary: Update Profile By ID
+  #     description: Api for the user to forgot Password
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: profileBody
+  #         type: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             email:
+  #               type: string
+  #             password:
+  #               type: string
+  #             username:
+  #               type: string
+  #             userType:
+  #               type: string
+  #               default: Student
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/profile/getProfile:
+  #   get:
+  #     tags:
+  #       - Profile
+  #     summary: Getting all the profile
+  #     description: Api for getting all the apis for the users
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/profile/addWishList/{courseId}/{userId}:
+  #   post:
+  #     tags:
+  #       - Course
+  #     summary: Add Course to Wishlist
+  #     description: Api for adding the course to the wishlist
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: userId
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/ticket/createTicket/{courseID}/{userID}:
+  #   post:
+  #     tags:
+  #       - Ticket
+  #     summary: Create Ticket
+  #     description: Api for creating the ticket
+  #     parameters:
+  #       - name: courseID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: ticketBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             topic:
+  #               type: string
+  #             question:
+  #               type: string
+  #             answer:
+  #               type: string
+  #             isAnswered:
+  #               type: boolean
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/ticket/getAllTickets:
+  #   get:
+  #     tags:
+  #       - Ticket
+  #     summary: Get All Tickets
+  #     description: Api for getting all the tickets
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/getTicketByTicket/{ticketID}:
+  #   get:
+  #     tags:
+  #       - Ticket
+  #     summary: Get Ticket By ID
+  #     description: Api for getting the ticket by ID
+  #     parameters:
+  #       - name: ticketID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/getTicketByCourse/{courseID}:
+  #   get:
+  #     tags:
+  #       - Ticket
+  #     summary: Get Ticket By Course ID
+  #     description: Api for getting the ticket by Course ID
+  #     parameters:
+  #       - name: courseID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/getTicketByUser/{userID}:
+  #   get:
+  #     tags:
+  #       - Ticket
+  #     summary: Get Ticket By User ID
+  #     description: Api for getting the ticket by User ID
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/deleteTicketbyTicket/{ticketID}:
+  #   delete:
+  #     tags:
+  #       - Ticket
+  #     summary: Delete Ticket By Ticket ID
+  #     description: Api for deleting the ticket by Ticket ID
+  #     parameters:
+  #       - name: ticketID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/deleteTicketByCourse/{courseID}:
+  #   delete:
+  #     tags:
+  #       - Ticket
+  #     summary: Delete Ticket By Course ID
+  #     description: Api for deleting the ticket by Course ID
+  #     parameters:
+  #       - name: courseID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/deleteTicketByUserID/{userID}:
+  #   delete:
+  #     tags:
+  #       - Ticket
+  #     summary: Delete Ticket By User ID
+  #     description: Api for deleting the ticket by User ID
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/couses/addCourseContent/{courseId}:
+  #   post:
+  #     tags:
+  #       - Course Content
+  #     summary: Add Course Content
+  #     description: Api for adding the course content
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: courseContentBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             contentName:
+  #               type: string
+  #             contentDescription:
+  #               type: string
+  #             contentImage:
+  #               type: string
+  #             contentVideo:
+  #               type: string
+  #             contentAudio:
+  #               type: string
+  #             contentFile:
+  #               type: string
+  #             contentLink:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/deleteAllTicket:
+  #   delete:
+  #     tags:
+  #       - Ticket
+  #     summary: Delete All Tickets
+  #     description: Api for deleting all the tickets
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/test/ticket/updateTicketByTicket/{ticketID}:
+  #   put:
+  #     tags:
+  #       - Ticket
+  #     summary: Update Ticket By Ticket ID
+  #     description: Api for updating the ticket by Ticket ID
+  #     parameters:
+  #       - name: ticketID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: ticketBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             courseName:
+  #               type: string
+  #             courseDescription:
+  #               type: string
+  #             price:
+  #               type: string
+  #             image:
+  #               type: string
+  #             bannerImage:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/populate/courses/{courseId}:
+  #   get:
+  #     tags:
+  #       - Course
+  #     summary: Get Course By Course ID
+  #     description: Api for getting the course by Course ID
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/analytics/getAllTeachers:
+  #   get:
+  #     tags:
+  #       - Analytics
+  #     summary: Get All Teachers
+  #     description: Api for getting all the teachers
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/analytics/getAllStudents:
+  #   get:
+  #     tags:
+  #       - Analytics
+  #     summary: Get All Students
+  #     description: Api for getting all the students
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/analytics/GetPeopleJoinedOnDay:
+  #   get:
+  #     tags:
+  #       - Analytics
+  #     summary: Get People Joined On Day
+  #     description: Api for getting the people joined on day
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/analytics/GetPeopleJoinedLastWeek:
+  #   get:
+  #     tags:
+  #       - Analytics
+  #     summary: Get People Joined Last Week
+  #     description: Api for getting the people joined last week
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/analytics/GetPeopleJoinedLastMonth:
+  #   get:
+  #     tags:
+  #       - Analytics
+  #     summary: Get People Joined Last Month
+  #     description: Api for getting the people joined last month
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/analytics/GetPeopleJoinedLastYear:
+  #   get:
+  #     tags:
+  #       - Analytics
+  #     summary: Get People Joined Last Year
+  #     description: Api for getting the people joined last year
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/getCourse/{courseId}/{userId}:
+  #   post:
+  #     tags:
+  #       - Course
+  #     summary: Add Course to Product Cart
+  #     description: Api for adding the course to the product cart
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: userId
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/getAllCourse:
+  #   get:
+  #     tags:
+  #       - Course
+  #     summary: Get all the courses
+  #     description: Getting all the courses in the database
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/getAllCourse/{courseId}:
+  #   get:
+  #     tags:
+  #       - Course
+  #     summary: Get all the courses by courseID
+  #     description: Getting the course by the courseID
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/deleteCourses:
+  #   delete:
+  #     tags:
+  #       - Course
+  #     summary: Delete all the courses
+  #     description: Deleting all the courses in the database
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/deleteCourse/{courseId}:
+  #   delete:
+  #     tags:
+  #       - Course
+  #     summary: Delete Course by course ID
+  #     description: Deleting the course by courseID
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/createCourse:
+  #   post:
+  #     tags:
+  #       - Course
+  #     summary: Post Course
+  #     description: Posting the course to the database
+  #     parameters:
+  #       - name: courseBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             courseName:
+  #               type: string
+  #             courseDescription:
+  #               type: string
+  #             price:
+  #               type: string
+  #             image:
+  #               type: string
+  #             bannerImage:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/courses/updateCourse/{courseId}:
+  #   put:
+  #     tags:
+  #       - Course
+  #     summary: Update Course
+  #     description: Updating the course in the database
+  #     parameters:
+  #       - name: courseId
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: courseBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             courseName:
+  #               type: string
+  #             courseDescription:
+  #               type: string
+  #             price:
+  #               type: string
+  #             image:
+  #               type: string
+  #             bannerImage:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/createDiscussion/{userID}:
+  #   post:
+  #     tags:
+  #       - Discussion
+  #     summary: Create Discussion
+  #     description: Creating the discussion in the database
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: discussionBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             content:
+  #               type: string
+  #             title:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/getAllDiscussion:
+  #   get:
+  #     tags:
+  #       - Discussion
+  #     summary: Get all the discussions
+  #     description: Getting all the discussions in the database
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/getDiscussionByDiscussion/{discussionID}:
+  #   get:
+  #     tags:
+  #       - Discussion
+  #     summary: Get Discussion by Discussion ID
+  #     description: Getting the discussion by the discussionID
+  #     parameters:
+  #       - name: discussionID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/getDiscussionByUser/{userID}:
+  #   get:
+  #     tags:
+  #       - Discussion
+  #     summary: Get Discussion by User ID
+  #     description: Getting the discussion by the userID
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/deleteDiscussionByDiscussion/{discussionID}:
+  #   delete:
+  #     tags:
+  #       - Discussion
+  #     summary: Delete Discussion by Discussion ID
+  #     description: Deleting the discussion by the discussionID
+  #     parameters:
+  #       - name: discussionID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/deleteDiscussion:
+  #   delete:
+  #     tags:
+  #       - Discussion
+  #     summary: Delete all the discussions
+  #     description: Deleting all the discussions in the database
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/discussion/deleteDiscussionByUser/{userID}:
+  #   delete:
+  #     tags:
+  #       - Discussion
+  #     summary: Delete Discussion by User ID
+  #     description: Deleting the discussion by the userID
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/createComment/{discussionID}/{userID}:
+  #   post:
+  #     tags:
+  #       - Comment
+  #     summary: Create Comment
+  #     description: Creating the comment in the database
+  #     parameters:
+  #       - name: discussionID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: commentBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             comment:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/getAllComments:
+  #   get:
+  #     tags:
+  #       - Comment
+  #     summary: Get all the comments
+  #     description: Getting all the comments in the database
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/getAllCommentsByDiscussion/{discussionID}:
+  #   get:
+  #     tags:
+  #       - Comment
+  #     summary: Get all the comments by discussion ID
+  #     description: Getting all the comments by the discussionID
+  #     parameters:
+  #       - name: discussionID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/getCommentByComment/{commentID}:
+  #   get:
+  #     tags:
+  #       - Comment
+  #     summary: Get Comment by Comment ID
+  #     description: Getting the comment by the commentID
+  #     parameters:
+  #       - name: commentID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/deleteCommentByComment/{commentID}:
+  #   delete:
+  #     tags:
+  #       - Comment
+  #     summary: Delete Comment by Comment ID
+  #     description: Deleting the comment by the commentID
+  #     parameters:
+  #       - name: commentID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/deleteComment/{userID}/{commentId}:
+  #   delete:
+  #     tags:
+  #       - Comment
+  #     summary: Delete Comment by User ID and Comment ID
+  #     description: Deleting the comment by the userID and commentID
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: commentID
+  #         in: path
+  #         type: string
+  #         required: true
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+  # /v1/api/comment/editComment/{commentId}/{userID}:
+  #   put:
+  #     tags:
+  #       - Comment
+  #     summary: Edit Comment by User ID and Comment ID
+  #     description: Editing the comment by the userID and commentID
+  #     parameters:
+  #       - name: userID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: commentID
+  #         in: path
+  #         type: string
+  #         required: true
+  #       - name: commentBody
+  #         in: body
+  #         schema:
+  #           type: object
+  #           properties:
+  #             comment:
+  #               type: string
+  #     responses:
+  #       200:
+  #         description: ok
+  #         schema:
+  #           type: object
+  #           properties:
+  #             Status:
+  #               type: string
+  #             Message:
+  #               type: string
+  #             Access-Token:
+  #               type: string
+
+  # # /api/v1/contracts/fetchFunctions:
+  # #   post:
+  # #     tags:
+  # #       - Contracts
+  # #     summary: Load Contract
+  # #     description: Loading Contract and returning readonly funcrtions and variables and event listeners
+  # #     parameters:
+  # #       - name: contractBody
+  # #         in: body
+  # #         schema:
+  # #           type: object
+  # #           properties:
+  # #             contractAddress:
+  # #               type: string
+  # #             ABI:
+  # #               type: array
+  # #     responses:
+  # #       200:
+  # #         descrition: OK
+  # # /api/v1/courseContent/uploadCourseContent/{courseID}:
+  # #   post:
+  # #     tags:
+  # #       - Uploads
+  # #     summary: Upload File
+  # #     description: Loading Contract and returning readonly funcrtions and variables and event listeners
+  # #     consumes:
+  # #       multipart/form-data
+  # #     produces:
+  # #       application/json
+  # #     parameters:
+  # #       - name: courseID
+  # #         in: path
+  # #         type: string
+  # #         required: true
+  # #       - name: image
+  # #         in: formData
+  # #         type: file
+  # #         required: true
+  # #       - name: typeContent
+  # #         in: formData
+  # #         type: string
+  # #         enum : ['Image', 'Video']
+  # #         required: true
+  # #     responses:
+  # #       200:
+  # #         descrition: OK
+  # # /api/v1/auth/signup:
+  # #   post:
+  # #     tags:
+  # #       - Auth
+  # #     summary : Signup User
+  # #     description: Singup user which takes name, email, and password
+  # #     parameters:
+  # #       - name: authBody
+  # #         in: body
+  # #         schema:
+  # #           type: object
+  # #           properties:
+  # #             name:
+  # #               type: string
+  # #             emailUser:
+  # #               type: string
+  # #             password:
+  # #               type: string
+  # #     responses:
+  # #       200:
+  # #         description: SUCCESS
+  # # /api/v1/auth/login:
+  # #   post:
+  # #     tags:
+  # #       - Auth
+  # #     summary : Login User
+  # #     description: Login User which takes email and password for the user
+  # #     parameters:
+  # #       - name: authBody
+  # #         in: body
+  # #         schema:
+  # #           type: object
+  # #           properties:
+  # #             emailUser:
+  # #               type: string
+  # #             password:
+  # #               type: string
+  # #     responses:
+  # #       200:
+  # #         description: SUCCESS
