@@ -62,17 +62,11 @@ module.exports = {
           .send(new Response(false, "User not created", "", 400, {}));
       }
       newUser.token = token;
-      res
+      return res
         .status(200)
         .send(
           new Response(true, "User Creation Success", newUser, 200, newUser)
         );
-
-      res.status(200).json({
-        status: true,
-        message: "User created successfully",
-        data: newUser,
-      });
     } else {
       res.status(400).json({
         status: false,
