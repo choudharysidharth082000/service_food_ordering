@@ -13,6 +13,7 @@ const initialize = async (passport) => {
           try {
             //varifying the the input for the email and the password
             const data = { email, password };
+            console.log(data);
             const check = "email password";
             const isValid = validateAuth(check, data);
             if (!isValid) {
@@ -29,13 +30,15 @@ const initialize = async (passport) => {
               });
             }
             console.log("The password is : " + password);
-            const checkPass = comparePassword(password, first.password);
+            console.log("The password is : " + first.password);
 
-            if (checkPass && first.email === email) {
+            // const checkPass = comparePassword(password, first.password);
+
+            if (first.password === password) {
               //generating the jwt token
               const token = await createJWT(first);
-              first.token = token;
-              return done(null, true, {
+              console.log(token);
+              return done(null, {
                 status: true,
                 message: "User Found",
                 data: first,
@@ -56,8 +59,14 @@ const initialize = async (passport) => {
         }
       )
     );
-    passport.serializeUser((user, done) => {});
-    passport.deserializeUser((id, done) => {});
+    //serealizing the user
+    passport.serializeUser((user, done) => {
+      done(null, user);
+    });
+    //deserealizing the user
+    passport.deserializeUser((user, done) => {
+      done(null, user);
+    });
   } catch (error) {
     console.log(error);
   }

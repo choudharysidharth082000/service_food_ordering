@@ -4,12 +4,12 @@ module.exports = (checks, data) => {
   let check = {};
   let checkList = {
     email: Joi.string().email().required(),
-    password: Joi.string().min(8).required(),
-    // mobileNumber: Joi.string().required().min(10).max(10),
-    // nameUser: Joi.string().min(3),
-    // userType: Joi.string().required(),
-    // confirmPassword: Joi.string().min(8).required(),
-    // userName: Joi.string().required(),
+    password: Joi.string().min(4).required(),
+    mobileNumber: Joi.string().required().min(10).max(10),
+    nameUser: Joi.string().min(3),
+    userType: Joi.string().required(),
+    confirmPassword: Joi.string().min(8).required(),
+    userName: Joi.string().required(),
   };
 
   checks.split(" ").forEach((key) => {

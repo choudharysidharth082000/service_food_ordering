@@ -15,12 +15,15 @@ const initializePasssport = require("./src/passport/passport-config.passport");
 const Response = require("./src/apis/commons/Response");
 const connection = require("./src/database/index.database");
 
-
-
-
-
 //functions fo the controllers
 const adminFunctions = require("./src/apis/controllers/admin.controller");
+// adminFunctions.adminInitialSetup();
+
+
+
+
+//routers
+const auth = require("./src/apis/view/Auth.view");
 
 //using the body parser
 app.use(bodyParser.json());
@@ -44,25 +47,9 @@ app.use("/api/user", (req, res) => {
   const response = new Response(true, "Success", "User is created", 200, {
     sample: "sample is the data",
   });
-  res.send(response);
+  console.log("Entered the yser Phase");
+  res.send(req.user);
 });
-
-app.post(
-  "/v1/api/auth/login",
-  passport.authenticate("local", {
-    failureFlash: false,
-  }),
-  (req, res) => {
-    res.send(req.user);
-  }
-);
-
-
-
-//adding a sample data to the first time when the application is ran
-
-
-app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 app.use(flash());
 app.use(
   session({
@@ -73,6 +60,22 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.post(
+  "/v1/api/auth/login",
+  passport.authenticate("local", {
+    failureFlash: true,
+  }),
+  (req, res) => {
+    console.log("Entered the user phase");
+    res.send(req.user);
+  }
+);
+
+//adding a sample data to the first time when the application is ran
+app.use("/v1/api/auth",auth);
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
+// app.use("/api/test/Login")
 
 //starting the server
 app.listen(PORT, () => {

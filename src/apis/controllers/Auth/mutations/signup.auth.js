@@ -1,4 +1,9 @@
+const Response = require("../../../commons/Response");
+const hashPassword = require("../../../utils/hashPassword.utils");
+const createJWT = require("../../../utils/createJWT.utils");
 const User = require("../../../commons/User/user");
+const authValidator = require("../../../utils/validators/authValidator.validator");
+const { user } = require("../../../models/auth.schema");
 
 module.exports = {
   // signup
@@ -7,6 +12,7 @@ module.exports = {
       nameUser,
       email,
       password,
+      userName,
       confirmPassword,
       userType,
       mobileNumber,
@@ -18,32 +24,55 @@ module.exports = {
         message: "Passwords do not match",
       });
     }
-    const user = { email, password, nameUser, userType, mobileNumber };
+    const userData = { email, password, nameUser, userType, mobileNumber };
     if (
       authValidator(
         "email nameUser confirmPassword userType userName mobileNumber password",
-        user
+        userData
       )
     ) {
       //finding if the user exists
-      const userExists = await Auth.findOne({ where: { email } });
+      const userExists = await user.findOne({ emailUser: email });
       if (userExists) {
-        res.status(400).json({
-          status: false,
-          message: "User already exists",
-        });
-      } else {
-        //hashing the password
-        const { generateSalt, generateHash } = await hashPassword(password);
-        user.password = generateHash;
-        user.salt = generateSalt;
-        const newUser = await Auth.create(user);
-        res.status(200).json({
-          status: true,
-          message: "User created successfully",
-          data: newUser,
-        });
+        return res
+          .status(400)
+          .send(new Response(false, "User already exists", "", 400, {}));
       }
+      //hashing the password
+      const { generateSalt, generateHash } = await hashPassword(password);
+      user.password = generateHash;
+      user.salt = generateSalt;
+      //creating the user
+      const newUser = new User(
+        nameUser,
+        userName,
+        email,
+        mobileNumber,
+        password,
+        generateHash,
+        generateSalt,
+        "admin"
+      );
+      //saving the user in the dataabase
+      const token = createJWT(newUser);
+      const addData = await newUser.addUser();
+      if (!addData) {
+        return res
+          .status(400)
+          .send(new Response(false, "User not created", "", 400, {}));
+      }
+      newUser.token = token;
+      res
+        .status(200)
+        .send(
+          new Response(true, "User Creation Success", newUser, 200, newUser)
+        );
+
+      res.status(200).json({
+        status: true,
+        message: "User created successfully",
+        data: newUser,
+      });
     } else {
       res.status(400).json({
         status: false,
