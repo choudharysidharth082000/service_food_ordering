@@ -1,7 +1,7 @@
 const checkAdmin = (req, res, next) => {
   //checking the session if the user is admin or not
-  console.log(req.session);
-  if (req.session.userType == "admin") next();
+  console.log(req.session.passport.user.data.userType);
+  if (req.session.passport.user.data.userType == "superadmin") next();
   else {
     res.status(401).json({
       status: false,
@@ -9,6 +9,5 @@ const checkAdmin = (req, res, next) => {
     });
   }
 };
-
 
 module.exports = checkAdmin;

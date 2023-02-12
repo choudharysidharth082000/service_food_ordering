@@ -1,8 +1,8 @@
 swagger: "2.0.0"
 info:
-  title: Tina Configurations
-  summary: Officical Zeeq Analytics for TINA
-  description: Api Documentation for Tina App Zeeq
+  title: MEAN Stack API Documentation
+  summary: Official API Documentation for Posist Technologies
+  description: APi Documentation for Posist Technologies
   version: 1.0.0
   contact:
     email: choudharysidharth082000@gmail.com
@@ -36,7 +36,7 @@ paths:
   /v1/api/auth/testAPI/checkUserLogin:
     get:
       tags:
-        - Test
+        - Session
       summary: Test Api
       description: Return HEllo world
       responses:
@@ -51,12 +51,12 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
-  /v1/api/auth/testAPI/checkUserLogin2:
+  /v1/api/auth/session/checkUserLogin:
     get:
       tags:
-        - Test
-      summary: Test Api
-      description: Return HEllo world
+        - Session
+      summary: Check Session Data
+      description: Checking the user session in the server
       responses:
         200:
           description: OK
