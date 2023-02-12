@@ -33,7 +33,25 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
-  /api/v1/testAPI/checkUserLogin:
+  /v1/api/auth/testAPI/checkUserLogin:
+    get:
+      tags:
+        - Test
+      summary: Test Api
+      description: Return HEllo world
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/auth/testAPI/checkUserLogin2:
     get:
       tags:
         - Test

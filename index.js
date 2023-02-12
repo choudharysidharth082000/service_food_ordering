@@ -19,9 +19,6 @@ const connection = require("./src/database/index.database");
 const adminFunctions = require("./src/apis/controllers/admin.controller");
 // adminFunctions.adminInitialSetup();
 
-
-
-
 //routers
 const auth = require("./src/apis/view/Auth.view");
 
@@ -73,7 +70,7 @@ app.post(
 );
 
 //adding a sample data to the first time when the application is ran
-app.use("/v1/api/auth",auth);
+app.use("/v1/api/auth", auth);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 // app.use("/api/test/Login")
 
