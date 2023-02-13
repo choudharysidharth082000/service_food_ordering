@@ -74,4 +74,46 @@ module.exports = {
       });
     }
   },
+  //deleting the user
+  deleteUser: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const deleteUser = await user.findByIdAndDelete(id);
+      if (!deleteUser) {
+        return res
+          .status(400)
+          .send(new Response(false, "User not deleted", "", 400, {}));
+      }
+      return res
+        .status(200)
+        .send(new Response(true, "User deleted", "", 200, deleteUser));
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(new Response(false, "Server Error", "", 500, error));
+    }
+  },
+  //updating the user
+  updateUser: async (req, res) => {
+    const { id } = req.params;
+    const { nameUser, email, userName, mobileNumber, userType } = req.body;
+    console.log(nameUser, email, userName, mobileNumber, userType);
+    const updateUser = await user.findByIdAndUpdate(id, {
+      nameUser,
+      emailUser: email,
+      userName,
+      mobileNumber,
+      userType,
+    });
+    if (!updateUser) {
+      return res
+        .status(400)
+        .send(new Response(false, "User not updated", "", 400, {}));
+    }
+    return res
+      .status(200)
+      .send(new Response(true, "User updated", "", 200, updateUser));
+  },
+
+
+  
 };

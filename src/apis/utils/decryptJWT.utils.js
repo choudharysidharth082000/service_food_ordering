@@ -9,10 +9,11 @@ module.exports = async (token) => {
   if (!token) {
     throw new Error("Token is not Given");
   }
-  const publicKey = fs.readFileSync("JWT_keys/public.key");
+  const publicKey = fs.readFileSync("src/keys/publickey.crt", "utf8");
 
   try {
     const decrypt = await jwt.verify(token, publicKey);
+    console.log(decrypt);
 
     if (!decrypt) {
       return false;

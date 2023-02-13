@@ -69,6 +69,83 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
+  /v1/api/user/allUsers:
+    get:
+      tags:
+        - User
+      summary: Get All Users
+      description: Get all the users from the database
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/user/userById/{id}:
+    get:
+      tags:
+        - User
+      summary: Get User By Id
+      description: Get the user by id
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/user/usersJoinedLastWeek/:
+    get:
+      tags:
+        - User
+      summary: Get Users Joined Last Week
+      description: Get the users who joined last week
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/user/usersJoinedLastMonth/:
+    get:
+      tags:
+        - User
+      summary: Get Users Joined Last Month
+      description: Get the users who joined last month
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
   /v1/api/auth/login:
     post:
       tags:
@@ -97,6 +174,49 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
+  /v1/api/auth/deleteUser/{id}:
+    delete:
+      tags:
+        - Auth
+      summary: Delete User
+      description: Delete user Permanentnly from the database (Can only be done by the admin)
+      parameters:
+        - in: path
+          type: string
+          name: id
+          required: true
+      responses:
+        200:
+          description: OK
+  /v1/api/auth/updateUser/{id}:
+    put:
+      tags:
+        - Auth
+      summary: Update User
+      description: Updating the user (can be done by all the users and admin)
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+        - in: body
+          name: authBody
+          schema:
+            type: object
+            properties:
+              nameUser:
+                type: string
+              email:
+                type: string
+              userName:
+                type: string
+              mobileNumber:
+                type: string
+              userType:
+                type: string
+      responses:
+        200:
+          description: OK
   /v1/api/auth/signup:
     post:
       tags:

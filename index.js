@@ -13,14 +13,15 @@ const swaggerJsDocs = YAML.load("./public/swagger/api.yaml");
 const initializePasssport = require("./src/passport/passport-config.passport");
 
 const Response = require("./src/apis/commons/Response");
+const fs = require("fs");
 const connection = require("./src/database/index.database");
-
 //functions fo the controllers
 const adminFunctions = require("./src/apis/controllers/admin.controller");
 // adminFunctions.adminInitialSetup();
 
 //routers
 const auth = require("./src/apis/view/Auth.view");
+const users = require("./src/apis/view/User.View");
 
 //using the body parser
 app.use(bodyParser.json());
@@ -71,6 +72,7 @@ app.post(
 
 //adding a sample data to the first time when the application is ran
 app.use("/v1/api/auth", auth);
+app.use("/v1/api/user", users);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 // app.use("/api/test/Login")
 
