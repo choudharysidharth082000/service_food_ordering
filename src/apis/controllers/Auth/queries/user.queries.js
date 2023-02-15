@@ -37,17 +37,18 @@ const finalObject = {
       });
   },
   //finding the user by id
-  findUserById: function (id) {
-    return new Promise((resolve, reject) => {
-      user
-        .findById(id)
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((err) => {
-          reject(err);
-        });
-    });
+  findUserById: function (req, res) {
+    const {id} = req.params;
+    user
+      .findOne({ _id: id })
+      .then(function (data) {
+        res.status(200).send(new Response(true, "User found", "", 200, data));
+      })
+      .catch(function (error) {
+        res
+          .status(400)
+          .send(new Response(false, "Invalid data", "", 400, error.message));
+      });
   },
   //finding the users joined last week
   findUsersJoinedLastWeek: function () {

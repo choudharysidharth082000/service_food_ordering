@@ -228,7 +228,29 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
-
+  /v1/api/auth/getUsers/{id}:
+    get:
+      tags: 
+        - Admin
+      summary: Get User By Id
+      description: Get the user by id
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
   /v1/api/auth/login:
     post:
       tags:
