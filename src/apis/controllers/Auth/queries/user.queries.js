@@ -38,7 +38,7 @@ const finalObject = {
   },
   //finding the user by id
   findUserById: function (req, res) {
-    const {id} = req.params;
+    const { id } = req.params;
     user
       .findOne({ _id: id })
       .then(function (data) {

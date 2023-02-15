@@ -1,24 +1,17 @@
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const saltRounds = process.env.SALTROUND;
 
+module.exports = async (password) => {
+  if (!password) {
+    throw new Error("Password is not loaded in the hasher");
+  }
 
-module.exports = async (password) => 
-{
+  const generateSalt = await bcrypt.genSalt(saltRounds);
 
-    if(!password)
-    {
-        throw new Error('Password is not loaded in the hasher');
-    }
+  const generateHash = await bcrypt.hash(password, generateSalt);
 
-    
-    const generateSalt =await  bcrypt.genSalt(saltRounds);
-    
-    const generateHash =await  bcrypt.hash(password, generateSalt);
-    
-    // console.log(generateSalt);
-    // console.log(generateHash);
+  // console.log(generateSalt);
+  // console.log(generateHash);
 
-    
-   return {generateSalt, generateHash};
-
-}
+  return { generateSalt, generateHash };
+};
