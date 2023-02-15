@@ -29,6 +29,7 @@ const initialize = async (passport) => {
                 message: "User Not Found",
               });
             }
+            console.log(first);
             console.log("The password is : " + password);
             console.log("The password is : " + first.password);
 

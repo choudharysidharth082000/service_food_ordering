@@ -69,6 +69,52 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
+  /v1/api/brand/createBrand/{userID}:
+    post:
+      tags:
+        - Brand
+      summary: Create Brand
+      description: Create a new brand
+      parameters:
+        - in: path
+          type: string
+          required: true
+          name: userID
+        - in: body
+          name: brandBody
+          schema:
+            type: object
+            properties:
+              brandName:
+                type: string
+              brandDescription:
+                type: string
+              brandLogo:
+                type: string
+              brandWebsite:
+                type: string
+              brandEmail:
+                type: string
+              brandPhoneNumber:
+                type: string
+              brandWebsite: 
+                type: string
+              brandSocialMedia:
+                type: string
+              brandOwnerAddress:
+                type: string
+      response: 
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
   /v1/api/user/allUsers:
     get:
       tags:
@@ -146,6 +192,43 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
+  /v1/api/auth/getAllDeleted:
+    get:
+      tags:
+        - Admin
+      summary: Get All Deleted Users
+      description: Get all the deleted users from the database
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/auth/getUsers:
+    get:
+      tags:
+        - Admin
+      summary: Get All Users
+      description: Get all the users from the database
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+
   /v1/api/auth/login:
     post:
       tags:
@@ -217,13 +300,21 @@ paths:
       responses:
         200:
           description: OK
-  /v1/api/auth/signup:
+  /v1/api/auth/signup/{brandID}/{outletID}:
     post:
       tags:
         - Auth
       summary: Signup
       description: Signup to the system
       parameters:
+        - in: path
+          type: string
+          name: brandID
+          required: false
+        - in: path
+          type: string
+          name: outletID
+          required: false
         - in: body
           name: authBody
           schema:

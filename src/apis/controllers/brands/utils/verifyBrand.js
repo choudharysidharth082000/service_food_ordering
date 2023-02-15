@@ -1,0 +1,34 @@
+const Joi = require("joi");
+
+module.exports = (checks, data) => {
+  let check = {};
+  let checkList = {
+    brandName: Joi.string().required(),
+    brandLogo: Joi.string().required(),
+    brandDescription: Joi.string().required(),
+    brandAddress: Joi.array().required(),
+    brandEmail: Joi.array().required(),
+    brandPhoneNumber: Joi.array().required(),
+    brandWebsite: Joi.string().required(),
+    brandSocialMedia: Joi.array().required(),
+    brandOwner: Joi.string().required(),
+    brandOwnerAddress: Joi.string().required(),
+  };
+
+  checks.split(" ").forEach((key) => {
+    let trimmedKey = key.trim();
+
+    if (trimmedKey && checkList[trimmedKey]) {
+      check[`${trimmedKey}`] = checkList[`${trimmedKey}`];
+    }
+  });
+
+  const schema = Joi.object(check);
+
+  const { error } = schema.validate(data);
+
+  if (error) {
+    return true;
+  }
+  return true;
+};

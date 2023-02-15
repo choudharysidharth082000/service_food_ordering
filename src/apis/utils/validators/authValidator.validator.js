@@ -21,6 +21,7 @@ module.exports = (checks, data) => {
   });
 
   const schema = Joi.object(check);
+  console.log(schema);
 
   const { error } = schema.validate(data);
 

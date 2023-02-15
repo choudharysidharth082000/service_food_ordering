@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+//importing the mongoodse Object ID
 
 const { Schema } = mongoose;
 
@@ -42,7 +43,7 @@ var brands = new Schema(
       required: true,
     },
     brandOwner: {
-      type: mongoose.Schema.types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },

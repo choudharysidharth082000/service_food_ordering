@@ -22,8 +22,7 @@ const adminFunctions = require("./src/apis/controllers/admin.controller");
 // adminFunctions.adminInitialSetup();
 
 //routers
-const auth = require("./src/apis/view/Auth.view");
-const users = require("./src/apis/view/User.View");
+const { auth, user, brand } = require("./src/apis/view");
 
 //using the body parser
 app.use(bodyParser.json());
@@ -75,7 +74,8 @@ app.post(
 
 //adding a sample data to the first time when the application is ran
 app.use("/v1/api/auth", auth);
-app.use("/v1/api/user", users);
+app.use("/v1/api/user", user);
+app.use("/v1/api/brand", brand);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 // app.use("/api/test/Login")
 

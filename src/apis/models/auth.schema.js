@@ -18,17 +18,18 @@ const users = new Schema(
     userType: {
       type: String,
       required: true,
-      enum: ["superadmin", "admin", "user"],
+      enum: ["superadmin", "admin", "employee", "manager", "customer"],
     },
     brandID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Brand",
-      required: true,
+      required: false,
     },
     outletID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Outlet",
-      required: true,
+      //adding the required field if it is employee
+      required: false,
     },
     userName: {
       type: String,
@@ -43,7 +44,7 @@ const users = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      required: false,
       min: 8,
     },
     passwordHash: {
