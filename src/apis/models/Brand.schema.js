@@ -2,57 +2,55 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const users = new Schema(
+var brands = new Schema(
   {
-    name: {
+    brandName: {
       type: String,
       required: true,
       min: 3,
     },
-    emailUser: {
+    brandLogo: {
       type: String,
       required: true,
-      unique: true,
-      min: 8,
-    },
-    userType: {
-      type: String,
-      required: true,
-      enum: ["superadmin", "admin", "user"],
-    },
-    brandID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: true,
-    },
-    outletID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Outlet",
-      required: true,
-    },
-    userName: {
-      type: String,
-      required: true,
-      unique: true,
       min: 3,
     },
-    phoneNumber: {
+    brandDescription: {
       type: String,
       required: true,
-      min: 10,
+      min: 3,
     },
-    password: {
-      type: String,
-      required: true,
-      min: 8,
-    },
-    passwordHash: {
-      type: String,
+    brandAddress: {
+      type: Array,
       required: true,
     },
-    passwordSalt: {
+    brandEmail: {
+      type: Array,
+      required: true,
+    },
+    brandPhoneNumber: {
+      type: Array,
+      required: true,
+    },
+    brandWebsite: {
       type: String,
       required: true,
+      min: 3,
+      trim: true,
+    },
+    brandSocialMedia: {
+      type: Array,
+      required: true,
+    },
+    brandOwner: {
+      type: mongoose.Schema.types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    brandOwnerAddress: {
+      type: String,
+      required: true,
+      min: 3,
+      trim: true,
     },
     isDeleted: {
       type: Boolean,
@@ -66,6 +64,6 @@ const users = new Schema(
   { timestamps: true }
 );
 
-const user = mongoose.model("User", users);
+const brand = mongoose.model("Brand", brands);
 
-exports.user = user;
+exports.brand = brand;

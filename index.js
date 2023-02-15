@@ -9,7 +9,9 @@ const session = require("express-session");
 const YAML = require("yamljs");
 const swaggerUI = require("swagger-ui-express");
 const passport = require("passport");
+
 const swaggerJsDocs = YAML.load("./public/swagger/api.yaml");
+const cors = require("cors");
 const initializePasssport = require("./src/passport/passport-config.passport");
 
 const Response = require("./src/apis/commons/Response");
@@ -56,6 +58,7 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
 

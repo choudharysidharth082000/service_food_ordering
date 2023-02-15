@@ -2,58 +2,67 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const users = new Schema(
+var outlets = new Schema(
   {
-    name: {
+    outletName: {
       type: String,
       required: true,
       min: 3,
-    },
-    emailUser: {
-      type: String,
-      required: true,
-      unique: true,
-      min: 8,
-    },
-    userType: {
-      type: String,
-      required: true,
-      enum: ["superadmin", "admin", "user"],
     },
     brandID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Brand",
       required: true,
     },
-    outletID: {
+    outletOwner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Outlet",
+      ref: "User",
       required: true,
     },
-    userName: {
+    outletLogo: {
       type: String,
       required: true,
-      unique: true,
       min: 3,
     },
-    phoneNumber: {
+    outletDescription: {
       type: String,
       required: true,
-      min: 10,
+      min: 3,
     },
-    password: {
+
+    outletAddress: {
       type: String,
       required: true,
-      min: 8,
+      min: 3,
     },
-    passwordHash: {
+    outletEmail: {
       type: String,
       required: true,
+      min: 3,
     },
-    passwordSalt: {
+    outletPhoneNumber: {
       type: String,
       required: true,
+      min: 3,
     },
+    outletWebsite: {
+      type: String,
+      required: true,
+      min: 3,
+    },
+    outletSocialMedia: {
+      type: Array,
+      required: true,
+    },
+    employees: {
+      type: Array,
+      required: true,
+    },
+    employeesCount: {
+      type: Number,
+      required: true,
+    },
+
     isDeleted: {
       type: Boolean,
       default: false,
@@ -66,6 +75,6 @@ const users = new Schema(
   { timestamps: true }
 );
 
-const user = mongoose.model("User", users);
+const outlet = mongoose.model("Outlet", outlets);
 
-exports.user = user;
+exports.outlet = outlet;
