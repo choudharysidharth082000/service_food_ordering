@@ -24,12 +24,14 @@ const users = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Brand",
       required: false,
+      default: ""
     },
     outletID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Outlet",
       //adding the required field if it is employee
       required: false,
+      default: ""
     },
     userName: {
       type: String,

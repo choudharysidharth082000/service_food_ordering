@@ -38,6 +38,10 @@ var brands = new Schema(
       min: 3,
       trim: true,
     },
+    brandAddress: {
+      type: Array,
+      required: true,
+    },
     brandSocialMedia: {
       type: Array,
       required: true,
@@ -46,12 +50,6 @@ var brands = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-    },
-    brandOwnerAddress: {
-      type: String,
-      required: true,
-      min: 3,
-      trim: true,
     },
     isDeleted: {
       type: Boolean,

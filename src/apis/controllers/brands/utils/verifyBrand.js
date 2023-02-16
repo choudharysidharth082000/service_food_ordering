@@ -11,8 +11,6 @@ module.exports = (checks, data) => {
     brandPhoneNumber: Joi.array().required(),
     brandWebsite: Joi.string().required(),
     brandSocialMedia: Joi.array().required(),
-    brandOwner: Joi.string().required(),
-    brandOwnerAddress: Joi.string().required(),
   };
 
   checks.split(" ").forEach((key) => {

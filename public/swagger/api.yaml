@@ -94,16 +94,14 @@ paths:
               brandWebsite:
                 type: string
               brandEmail:
-                type: string
+                type: array
               brandPhoneNumber:
-                type: string
+                type: array
               brandWebsite: 
                 type: string
               brandSocialMedia:
-                type: string
-              brandOwnerAddress:
-                type: string
-      response: 
+                type: array              
+      responses:
         200:
           description: OK
           schema:
@@ -115,6 +113,8 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
+
+
   /v1/api/user/allUsers:
     get:
       tags:
