@@ -1,4 +1,4 @@
-baconst { outlet } = require("../../../models");
+const { outlet } = require("../../../models");
 const Response = require("../../../commons/Response");
 module.exports = {
   updateOutlate: function (req, res) {
