@@ -94,13 +94,40 @@ paths:
               brandWebsite:
                 type: string
               brandEmail:
-                type: array
+                schema: 
+                  type: array
+                properties:
+                  email:
+                    type: string
               brandPhoneNumber:
                 type: array
               brandWebsite: 
                 type: string
               brandSocialMedia:
                 type: array              
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/brand/disableBrand/{brandID}:
+    put:
+      tags:
+        - Brand
+      summary: Disable Brand
+      description: Disable a brand
+      parameters:
+        - in: path
+          type: string
+          required: true
+          name: brandID
       responses:
         200:
           description: OK
@@ -293,6 +320,53 @@ paths:
       responses:
         200:
           description: OK
+  /v1/api/outlet/createOutlet/{brandID}/{managerID}:
+    post:
+      tags: 
+        - Outlet
+      summary: Create Outlet
+      description: Create an outlet for a brand
+      parameters: 
+        - in: path
+          name: brandID
+          type: string
+          required: true
+        - in: path
+          name: managerID
+          type: string
+          required: true
+        - in: body
+          name: authBody
+          schema:
+            type: object
+            properties:
+              outletName:
+                type: string
+              outletAddress:
+                type: string
+              outletEmail:
+                type: string
+              outletWebsite:
+                type: string
+              outletLogo:
+                type: string
+              outletDescription:
+                type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+
+      
+
   /v1/api/auth/updateUser/{id}:
     put:
       tags:
@@ -322,6 +396,143 @@ paths:
       responses:
         200:
           description: OK
+  /v1/api/brand/getBrands:
+    get:
+      tags:
+        - Brand
+      summary: Get All Brands
+      description: Get all the brands from the database
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/brand/getBrand/{brandID}:
+    get:
+      tags:
+        - Brand
+      summary: Get Brand By Id
+      description: Get the brand by id
+      parameters:
+        - in: path
+          name: brandID
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/brand/getDisabledBrands:
+    get:
+      tags:
+        - Brand
+      summary: Get All Disabled Brands
+      description: Get all the disabled brands from the database
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/brand/enableBrand/{brandID}:
+    put:
+      tags:
+        - Brand
+      summary: Enable the Brand
+      descruption: Enable the brand (can be done by all the users and admin)
+      parameters:
+        - in: path
+          name: brandID
+          type: string
+          required: true
+      responses:
+        200:
+          description: OK
+  /v1/api/brand/getDeletedBrands:
+    get:
+      tags:
+        - Brand
+      summary: Get All Deleted Brands
+      description: Get all the deleted brands from the database
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+  /v1/api/brand/updateBrand/{brandID}:
+    put:
+      tags: 
+        - Brand
+      summary: Update Brand
+      description: Updating the brand (can be done by all the users and admin)
+      parameters:
+        - in: path
+          name: brandID
+          type: string
+          required: true
+        - in: body
+          name: authBody
+          schema:
+            type: object
+            properties:
+              brandName:
+                type: string
+              brandLogo:
+                type: string
+              brandAddress:
+                type: array
+                items:
+                  type: string
+              brandDescription:
+                type: string
+              brandWebsite:
+                type: string
+              brandSocialMedia:
+                type: array
+                items:
+                  type: object
+                  peoperties:
+                    socialMediaName:
+                      type: string
+                    socialMediaLink:
+                      type: string
+                
+      responses:
+        200:
+          description: OK
+          
+    
+
+          
+              
   /v1/api/auth/signup/{brandID}/{outletID}:
     post:
       tags:

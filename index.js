@@ -22,7 +22,7 @@ const adminFunctions = require("./src/apis/controllers/admin.controller");
 // adminFunctions.adminInitialSetup();
 
 //routers
-const { auth, user, brand } = require("./src/apis/view");
+const { auth, user, brand, outlet } = require("./src/apis/view");
 
 //using the body parser
 app.use(bodyParser.json());
@@ -76,6 +76,7 @@ app.post(
 app.use("/v1/api/auth", auth);
 app.use("/v1/api/user", user);
 app.use("/v1/api/brand", brand);
+app.use("/v1/api/outlet", outlet);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 // app.use("/api/test/Login")
 

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const users = new Schema(
+const customers = new Schema(
   {
     name: {
       type: String,
@@ -15,48 +15,42 @@ const users = new Schema(
       unique: true,
       min: 8,
     },
-    userType: {
-      type: String,
-      required: true,
-      enum: ["superadmin", "admin", "employee", "manager"],
+    userType:
+    {
+        type: String,
+        enum: ["premium", "normal"]
     },
     brandID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Brand",
       required: false,
-      default: "",
+      default: ""
     },
     outletID: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Outlet",
       //adding the required field if it is employee
       required: false,
-      default: "",
-    },
-    userName: {
-      type: String,
-      required: true,
-      unique: true,
-      min: 3,
+      default: ""
     },
     phoneNumber: {
       type: String,
       required: true,
       min: 10,
     },
-    password: {
-      type: String,
-      required: false,
-      min: 8,
-    },
-    passwordHash: {
-      type: String,
-      required: true,
-    },
-    passwordSalt: {
-      type: String,
-      required: true,
-    },
+    // password: {
+    //   type: String,
+    //   required: false,
+    //   min: 8,
+    // },
+    // passwordHash: {
+    //   type: String,
+    //   required: true,
+    // },
+    // passwordSalt: {
+    //   type: String,
+    //   required: true,
+    // },
     isDeleted: {
       type: Boolean,
       default: false,

@@ -1,5 +1,14 @@
-const {createBrand} = require("./createBrand.brand.controller");
+const {
+  createBrand,
+  updateBrand,
+  disableBrand,
+  enableBrand,
+} = require("./createBrand.brand.controller");
 
 module.exports = {
-    createBrand,
+  createBrand,
+  updateBrand,
+  disableBrand,
+  enableBrand
+  
 };

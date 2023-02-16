@@ -31,7 +31,7 @@ var outlets = new Schema(
     },
 
     outletAddress: {
-      type: String,
+      type: Array,
       required: true,
       min: 3,
     },
@@ -41,9 +41,8 @@ var outlets = new Schema(
       min: 3,
     },
     outletPhoneNumber: {
-      type: String,
+      type: Array,
       required: true,
-      min: 3,
     },
     outletWebsite: {
       type: String,
@@ -54,15 +53,6 @@ var outlets = new Schema(
       type: Array,
       required: true,
     },
-    employees: {
-      type: Array,
-      required: true,
-    },
-    employeesCount: {
-      type: Number,
-      required: true,
-    },
-
     isDeleted: {
       type: Boolean,
       default: false,
