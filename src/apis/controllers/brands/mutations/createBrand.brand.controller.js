@@ -140,13 +140,26 @@ const finalFunctions = {
             .status(400)
             .send(new Response(false, 400, "Brand not found", null));
         }
-        //finding all the outlets and disabling the outlets all 
-      
-        
-
-        return res
-          .status(200)
-          .send(new Response(true, 200, "Brand Disabled", data));
+        //finding all the outlets and disabling the outlets all
+        outlet
+          .findByIdAndUpdate({ brandID: brandID }, { isDisabled: true })
+          .then(function (data) {
+            if (!data) {
+              return res
+                .status(400)
+                .send(new Response(false, 400, "Outlet not found", null));
+            }
+            return res
+              .status(200)
+              .send(new Response(true, 200, "Outlet Disabled", data));
+          })
+          .catch(function (error) {
+            return res
+              .status(500)
+              .send(
+                new Response(false, 500, "Internal Server Error", error.message)
+              );
+          });
       })
       .catch(function (error) {
         return res
@@ -157,6 +170,7 @@ const finalFunctions = {
       });
   },
   enableBrand: function (req, res) {
+    const brandID = req.params.brandID;
     brand
       .findByIdAndUpdate({ _id: brandID }, { isDisabled: false })
       .then(function (data) {
@@ -165,9 +179,21 @@ const finalFunctions = {
             .status(400)
             .send(new Response(false, 400, "Brand not found", null));
         }
-        return res
-          .status(200)
-          .send(new Response(true, 200, "Brand Enabled", data));
+        //enabling allm the outlets
+        outlet
+          .findByIdAndUpdate({ brandID: brandID }, { isDisabled: false })
+          .then(function (data) {
+            if (!data) {
+              return res
+                .status(400)
+                .send(new Response(false, 400, "Outlet not found", null));
+            }
+            return res
+              .status(200)
+              .send(
+                new Response(true, 200, "Brands and Outlets are Enabled", data)
+              );
+          });
       });
   },
 };
