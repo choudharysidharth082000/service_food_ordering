@@ -26,6 +26,7 @@ const finalFunctions = {
       brandPhoneNumber,
       brandWebsite,
       brandSocialMedia,
+      brandName
     };
 
     //sending the data to the database using promise
@@ -48,7 +49,7 @@ const finalFunctions = {
         user
           .findByIdAndUpdate(
             { _id: brandOwner },
-            { userType: "admin", brandID: data._id }
+            { userType: "admin", "brand.brandID": data._id, "brand.brandName": data.brandName }
           )
           .then(function (data) {
             if (!data) {

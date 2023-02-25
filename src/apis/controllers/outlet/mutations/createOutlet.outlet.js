@@ -11,6 +11,8 @@ module.exports = {
       outletPhoneNumber,
       outletWebsite,
       outletSocialMedia,
+      outletOwnerName,
+      brandName,
     } = req.body;
 
     const brandID = req.params.brandID;
@@ -25,8 +27,14 @@ module.exports = {
       outletPhoneNumber,
       outletWebsite,
       outletSocialMedia,
-      outletOwner,
-      brandID,
+      brand: {
+        brandID,
+        brandName,
+      },
+      owner: {
+        outletOwnerID: outletOwner,
+        outletOwnerName: outletOwnerName,
+      },
     });
     newOutlet
       .save()
@@ -43,7 +51,14 @@ module.exports = {
             {
               userType: "manager",
               outletID: data._id,
-              brandID: brandID,
+              brand: {
+                brandID: brandID,
+                brandName: brandName,
+              },
+              outlet: {
+                outletID: data._id,
+                outletName: data.outletName,
+              },
             }
           )
           .then(function (data) {
@@ -58,6 +73,48 @@ module.exports = {
                 new Response(true, 200, "Outlet created successfully", data)
               );
           });
+      })
+      .catch(function (error) {
+        return res
+          .status(500)
+          .send(new Response(false, 500, "Internal Server Error", error));
+      });
+  },
+
+  getAllOutlets: function (req, res) {
+    outlet
+      .find()
+      .then(function (data) {
+        if (!data) {
+          return res
+            .status(400)
+            .send(new Response(false, 400, "No outlets found", null));
+        }
+        return res
+          .status(200)
+          .send(new Response(true, 200, "Outlets found", data));
+      })
+      .catch(function (error) {
+        return res
+          .status(500)
+          .send(new Response(false, 500, "Internal Server Error", error));
+      });
+  },
+
+  getOutletByBrandID: function (req, res) {
+    const brandID = req.params.brandID;
+    console.log("This is the brandID", brandID);
+    outlet
+      .find({ "brand.brandID": brandID })
+      .then(function (data) {
+        if (!data) {
+          return res
+            .status(400)
+            .send(new Response(false, 400, "No outlets found", null));
+        }
+        return res
+          .status(200)
+          .send(new Response(true, 200, "Outlets found", data));
       })
       .catch(function (error) {
         return res

@@ -50,6 +50,26 @@ const finalObject = {
           .send(new Response(false, "Invalid data", "", 400, error.message));
       });
   },
+  findUserByBrandIDAndCheckEmployeeOutlet: function (req, res) {
+    //user type must be emplyee or manager and brandud must be same as the brand id
+    const { brandID } = req.params;
+    // user type can be either employee or manager but brand id must be same as the brand id
+    user
+      .find({
+        $and: [
+          { userType: { $in: ["employee", "manager"] } },
+          { "brand.brandID": brandID },
+        ],
+      })
+      .then(function (data) {
+        res.status(200).send(new Response(true, "User found", "", 200, data));
+      })
+      .catch(function (error) {
+        res
+          .status(400)
+          .send(new Response(false, "Invalid data", "", 400, error.message));
+      });
+  },
   //finding the users joined last week
   findUsersJoinedLastWeek: function () {
     return new Promise((resolve, reject) => {

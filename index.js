@@ -12,7 +12,6 @@ const passport = require("passport");
 
 const swaggerJsDocs = YAML.load("./public/swagger/api.yaml");
 const cors = require("cors");
-const initializePasssport = require("./src/passport/passport-config.passport");
 
 const Response = require("./src/apis/commons/Response");
 const fs = require("fs");
@@ -22,7 +21,17 @@ const adminFunctions = require("./src/apis/controllers/admin.controller");
 // adminFunctions.adminInitialSetup();
 
 //routers
-const { auth, user, brand, outlet } = require("./src/apis/view");
+const {
+  auth,
+  user,
+  brand,
+  outlet,
+  foodItem,
+  category,
+  products,
+  superCategory,
+  customer
+} = require("./src/apis/view");
 
 //using the body parser
 app.use(bodyParser.json());
@@ -38,8 +47,6 @@ const PORT = process.env.PORT || 3001;
 const mongoURL = process.env.MONGO_URL;
 console.log(mongoURL);
 connection.connectDatabase(mongoURL);
-
-initializePasssport(passport);
 
 //sample routes
 app.use("/api/user", (req, res) => {
@@ -60,15 +67,13 @@ app.use(
 app.use(cors());
 app.use(passport.initialize());
 app.use(passport.session());
+require("./src/passport/passport-config.passport");
 
-app.post(
-  "/v1/api/auth/login",
-  passport.authenticate("local", {
-    failureFlash: true,
-  }),
+app.get(
+  "/protectedRoute",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log("Entered the user phase");
-    res.send(req.user);
+    res.send("Authenticated");
   }
 );
 
@@ -77,6 +82,11 @@ app.use("/v1/api/auth", auth);
 app.use("/v1/api/user", user);
 app.use("/v1/api/brand", brand);
 app.use("/v1/api/outlet", outlet);
+app.use("/v1/api/foodItem", foodItem);
+app.use("/v1/api/category", category);
+app.use("/v1/api/product", products);
+app.use("/v1/api/superCategory", superCategory);
+app.use("/v1/api/customer", customer);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerJsDocs));
 // app.use("/api/test/Login")
 

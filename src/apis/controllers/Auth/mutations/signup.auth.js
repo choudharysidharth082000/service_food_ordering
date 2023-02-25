@@ -1,7 +1,7 @@
 const Response = require("../../../commons/Response");
 const hashPassword = require("../../../utils/hashPassword.utils");
 const createJWT = require("../../../utils/createJWT.utils");
-const User = require("../../../commons/User/user");
+const UserData = require("../../../commons/User/user");
 const authValidator = require("../../../utils/validators/authValidator.validator");
 const { user } = require("../../../models/auth.schema");
 const {
@@ -22,7 +22,15 @@ module.exports = {
       userType,
       mobileNumber,
     } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
+    //cehck if brandname is present
+    var brandName = req.body.brandName ? req.body.brandName : undefined;
+    var brandID = req.params.brandID ? req.params.brandID : "";
+    console.log(req.params);
+    //put default value for object id if not present
+    var outletID = req.params.outletID ? req.body.outletID : null;
+    var outletName = req.body.outletName ? req.body.outletName : "";
+
     if (password != confirmPassword) {
       res.status(400).json({
         status: false,
@@ -58,113 +66,127 @@ module.exports = {
         } else {
           //hashing the password
           hashPassword(password).then((data) => {
-            const user = new User(
-              nameUser,
-              email,
-              userName,
-              mobileNumber,
-              password,
-              data.generateHash,
-              data.generateSalt,
-              userType
-            );
-            //adding the user to the database
-            if (userData.userType == "admin") {
-              const brandID = req.params.brandID;
-              addAdmin(user, brandID)
-                .then((data) => {
-                  res
-                    .status(200)
-                    .send(new Response(true, "Admin added", "", 200, data));
-                })
-                .catch((error) => {
-                  res
-                    .status(400)
-                    .send(
-                      new Response(
-                        false,
-                        "Invalid data",
-                        "",
-                        400,
-                        error.message
-                      )
-                    );
-                });
-            } else if (userData.userType == "manager") {
-              addManager(user)
-                .then((data) => {
-                  res
-                    .status(200)
-                    .send(new Response(true, "Manager added", "", 200, data));
-                })
-                .catch((error) => {
-                  res
-                    .status(400)
-                    .send(
-                      new Response(
-                        false,
-                        "Invalid data",
-                        "",
-                        400,
-                        error.message
-                      )
-                    );
-                });
-            } else if ((userData.userType = "employee")) {
-              addEmployee(user)
-                .then((data) => {
-                  res
-                    .status(200)
-                    .send(new Response(true, "Employee added", "", 200, data));
-                })
-                .catch((error) => {
-                  res
-                    .status(400)
-                    .send(
-                      new Response(
-                        false,
-                        "Invalid data",
-                        "",
-                        400,
-                        error.message
-                      )
-                    );
-                });
-            } else if (userData.userType == "customer") {
-              addCustomer(user)
-                .then((data) => {
-                  res
-                    .status(200)
-                    .send(new Response(true, "Customer added", "", 200, data));
-                })
-                .catch((error) => {
-                  console.log("This is the customer error");
-                  res
-                    .status(400)
-                    .send(
-                      new Response(
-                        false,
-                        "Invalid data",
-                        "",
-                        400,
-                        error.message
-                      )
-                    );
-                });
-            } else {
-              res
-                .status(400)
-                .send(
-                  new Response(false, "Invalid data Customer", "", 400, {})
-                );
-            }
+            console.log(data);
+            const addData = new user({
+              name: nameUser,
+              emailUser: email,
+              userName: userName,
+              phoneNumber: mobileNumber,
+              password: password,
+              passwordHash: data.generateHash,
+              passwordSalt: data.generateSalt,
+              userType: userType,
+              brand: {
+                brandID: brandID,
+                brandName: brandName,
+              },
+              //only if outlet is present
+              outlet: {
+                outletID: outletID,
+                outletName: outletName,
+              },
+            });
+            addData
+              .save()
+              .then((data) => {
+                console.log(data);
+                res
+                  .status(200)
+                  .send(
+                    new Response(
+                      true,
+                      "User added successfully",
+                      data,
+                      200,
+                      data
+                    )
+                  );
+              })
+              .catch((err) => {
+                res
+                  .status(400)
+                  .send(new Response(false, "Invalid data Main", "", 400, err));
+              });
           });
         }
       })
       .catch((error) => {
         res
           .status(400)
-          .send(new Response(false, "Invalid data Main", "", 400, {}));
+          .send(new Response(false, "Invalid data Main", "", 400, error));
+      });
+  },
+
+  login: function (req, res) {
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .send(
+          new Response(
+            false,
+            "Invalid data in arguements",
+            "Please Enter something",
+            400,
+            {}
+          )
+        );
+    }
+
+    user
+      .findOne({ emailUser: email })
+      .then((data) => {
+        console.log(data.brand);
+        console.log("Database password is " + data.password);
+        if (!data) {
+          return res
+            .status(400)
+            .send(new Response(false, "Invalid data", "Invalid Data", 400, {}));
+        }
+        //checking if the password is correct
+
+        if (data.password != password) {
+          return res
+            .status(400)
+            .send(
+              new Response(
+                false,
+                "Invalid data Password",
+                "Invalid Data",
+                400,
+                {}
+              )
+            );
+        }
+        //creating the jwt
+        const jwtPayload = {
+          id: data._id,
+          userType: data.userType,
+          email: data.emailUser,
+        };
+        console.log(jwtPayload);
+        const token = createJWT(jwtPayload);
+        const response = {};
+        response.token = `Bearer ${token}`;
+        response.email = email;
+        response.phone = data.phoneNumber;
+        response.name = data.nameUser;
+        response.userType = data.userType;
+        response.userName = data.userName;
+        response.brand = data.brand;
+        response.outlet = data.outlet;
+
+        res
+          .status(200)
+          .send(
+            new Response(true, "Login successful", response, 200, { token })
+          );
+      })
+      .catch((error) => {
+        res
+          .status(400)
+          .send(new Response(false, "Invalid data", "Invalid Data", 400, {}));
       });
   },
 
@@ -193,21 +215,37 @@ module.exports = {
   updateUser: async (req, res) => {
     const { id } = req.params;
     const { nameUser, email, userName, mobileNumber, userType } = req.body;
+    console.log(req.body, req.params.id);
     console.log(nameUser, email, userName, mobileNumber, userType);
-    const updateUser = await user.findByIdAndUpdate(id, {
-      nameUser,
-      emailUser: email,
-      userName,
-      mobileNumber,
-      userType,
-    });
-    if (!updateUser) {
-      return res
-        .status(400)
-        .send(new Response(false, "User not updated", "", 400, {}));
-    }
-    return res
-      .status(200)
-      .send(new Response(true, "User updated", "", 200, updateUser));
+    user
+      .findOneAndUpdate(
+        { _id: id },
+        {
+          name: nameUser,
+          emailUser: email,
+          userName,
+          phoneNumber: mobileNumber,
+          userType,
+        },
+        { new: false }
+      )
+      .then((data) => {
+        console.log(data);
+        if (!data) {
+          return res
+            .status(400)
+            .send(new Response(false, "User not updated", "", 400, {}));
+        }
+        return res
+          .status(200)
+          .send(new Response(true, "User updated", "", 200, data));
+      })
+      .catch((error) => {
+        return res
+          .status(400)
+          .send(
+            new Response(false, "User not updated", "", 400, error.message)
+          );
+      });
   },
 };

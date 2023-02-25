@@ -15,42 +15,38 @@ const customers = new Schema(
       unique: true,
       min: 8,
     },
-    userType:
-    {
+    // userType: {
+    //   type: String,
+    //   enum: ["premium", "normal"],
+    // },
+    brand: {
+      brandID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: true,
+        default: "",
+      },
+      brandName: {
         type: String,
-        enum: ["premium", "normal"]
+        required: true, 
+        default: "",
+      },
     },
-    brandID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: false,
-      default: ""
-    },
-    outletID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Outlet",
-      //adding the required field if it is employee
-      required: false,
-      default: ""
+    outlet: {
+      outletID: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+      },
+      outletName: {
+        type: String,
+        requried: true,
+      },
     },
     phoneNumber: {
       type: String,
       required: true,
       min: 10,
     },
-    // password: {
-    //   type: String,
-    //   required: false,
-    //   min: 8,
-    // },
-    // passwordHash: {
-    //   type: String,
-    //   required: true,
-    // },
-    // passwordSalt: {
-    //   type: String,
-    //   required: true,
-    // },
     isDeleted: {
       type: Boolean,
       default: false,
@@ -63,6 +59,6 @@ const customers = new Schema(
   { timestamps: true }
 );
 
-const user = mongoose.model("User", users);
+const customer = mongoose.model("Customer", customers);
 
-exports.user = user;
+exports.customer = customer;

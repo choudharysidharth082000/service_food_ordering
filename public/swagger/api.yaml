@@ -364,6 +364,47 @@ paths:
           description: Undocumented
         500:
           description: Internal Server Error
+  /v1/api/foodData/createSuperCategory/{brandID}/{brandName}:
+    post:
+      tags: 
+        - FoodData
+      summary: Create the Super Category
+      description: Create the super category for the food data
+      # security Header Bear Token
+      parameters:
+        - in: path
+          name: brandID
+          type: string
+          required: true
+        - in: path
+          name: brandName
+          type: string
+          required: true
+        - in: body
+          name: authBody
+          schema:
+            type: object
+            properties:
+              superCategoryName:
+                type: string
+              superCategoryDescription:
+                type: string
+              superCategoryImage:
+                type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+        400:
+          description: Undocumented
+        500:
+          description: Internal Server Error
+      
+
 
       
 

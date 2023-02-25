@@ -9,15 +9,27 @@ var outlets = new Schema(
       required: true,
       min: 3,
     },
-    brandID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: true,
+    brand: {
+      brandID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: true,
+      },
+      brandName: {
+        type: String,
+        required: true,
+      },
     },
-    outletOwner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    owner: {
+      outletOwnerID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      outletOwnerName: {
+        type: String,
+        required: true,
+      },
     },
     outletLogo: {
       type: String,
@@ -36,7 +48,7 @@ var outlets = new Schema(
       min: 3,
     },
     outletEmail: {
-      type: String,
+      type: Array,
       required: true,
       min: 3,
     },

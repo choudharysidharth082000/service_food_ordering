@@ -8,6 +8,7 @@ var brands = new Schema(
     brandName: {
       type: String,
       required: true,
+      unique: true,
       min: 3,
     },
     brandLogo: {
@@ -46,10 +47,16 @@ var brands = new Schema(
       type: Array,
       required: true,
     },
-    brandOwner: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
+    brand: {
+      brandOwnerID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+      },
+      brandOwnerName: {
+        type: String,
+        required: true,
+      },
     },
     isDeleted: {
       type: Boolean,

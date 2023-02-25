@@ -28,15 +28,39 @@ var foodItems = new Schema(
       required: true,
       min: 3,
     },
-    foodItemCategory: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "FoodCategory",
-      required: true,
+    category: {
+      categoryID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "FoodCategory",
+        required: true,
+      },
+      categoryName: {
+        type: String,
+        requried: true,
+      },
     },
-    brandID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: true,
+    superCategory: {
+      superCategoryID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SuperCategory",
+        required: true,
+      },
+      superCategoryName: {
+        type: String,
+        required: true,
+      },
+    },
+
+    brand: {
+      brandID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: true,
+      },
+      brandName: {
+        type: String,
+        required: true,
+      },
     },
 
     isDeleted: {

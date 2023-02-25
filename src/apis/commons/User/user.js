@@ -1,5 +1,5 @@
 const { user } = require("../../models/auth.schema");
-module.exports = class User {
+module.exports = class UserData {
   constructor(
     name,
     emailUser,
@@ -8,7 +8,11 @@ module.exports = class User {
     password,
     passwordHash,
     passwordSalt,
-    userType
+    userType,
+    brandName,
+    brandID,
+    outletID,
+    outletName
   ) {
     this.name = name;
     this.emailUser = emailUser;
@@ -18,6 +22,11 @@ module.exports = class User {
     this.passwordHash = passwordHash;
     this.passwordSalt = passwordSalt;
     this.userType = userType;
+    //default value must be ""
+    this.brandName = brandName;
+    this.brandID = brandID;
+    this.outletID = outletID;
+    this.outletName = outletName;
   }
   //adding the user to the database
   addUser() {
@@ -32,6 +41,14 @@ module.exports = class User {
         passwordHash: this.passwordHash,
         passwordSalt: this.passwordSalt,
         userType: this.userType,
+        band: {
+          brandName: this.brandName,
+          brandID: this.brandID,
+        },
+        outlet: {
+          outletName: this.outletName,
+          outletID: this.outletID,
+        },
       });
       newUser
         .save()

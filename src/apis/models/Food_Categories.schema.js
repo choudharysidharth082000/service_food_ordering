@@ -9,10 +9,28 @@ var categoriesFoods = new Schema(
       required: true,
       min: 3,
     },
-    brandID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: true,
+    brand: {
+      brandID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: false,
+        default: "",
+      },
+      brandName: {
+        type: String,
+        required: false,
+      },
+    },
+    superCategory: {
+      superCategoryID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SuperCategory",
+        required: true,
+      },
+      superCategoryName: {
+        type: String,
+        required: true,
+      },
     },
     foodCategoryDescription: {
       type: String,

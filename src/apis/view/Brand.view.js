@@ -4,7 +4,7 @@ const {
   createBrand,
   updateBrand,
   disableBrand,
-  enableBrand
+  enableBrand,
 } = require("../controllers/brands/mutations/index");
 const { checkUserLogin } = require("../controllers/Auth/middlewares");
 const {
@@ -23,8 +23,7 @@ const {
 
 router.post(
   "/createBrand/:userID",
-  checkUserLogin,
-  checkSuperAdmin,
+
   createBrand
 );
 router.get("/testBrandRoute", (req, res) => {
@@ -44,12 +43,12 @@ router.put(
 );
 
 //get requests
-router.get("/getBrands", checkUserLogin, checkSuperAdmin, getAllBrands);
+router.get("/getBrands", getAllBrands);
 router.get("/getBrand/:brandID", checkUserLogin, checkSuperAdmin, getBrandById);
 router.get(
   "/getBrandsByUserId/:userID",
   checkUserLogin,
-checkSuperAdmin,
+  checkSuperAdmin,
   getBrandsByUserId
 );
 router.get(
@@ -64,6 +63,11 @@ router.get(
   checkSuperAdmin,
   getDeletedBrands
 );
-router.put("/enableBrand/:brandID", checkUserLogin, checkSuperAdmin, enableBrand)
+router.put(
+  "/enableBrand/:brandID",
+  checkUserLogin,
+  checkSuperAdmin,
+  enableBrand
+);
 
 module.exports = router;

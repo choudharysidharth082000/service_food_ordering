@@ -6,6 +6,7 @@ var orders = new Schema(
   {
     orderStatus: {
       type: String,
+      enum: ["Pending", "Accepted", "Rejected", "Delivered"],
       required: true,
       min: 3,
     },
@@ -28,21 +29,47 @@ var orders = new Schema(
       type: Array,
       required: true,
     },
-    orderCustomer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: false,
+    customer: {
+      orderCustomerID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: false,
+      },
+      orderCustomerName: {
+        type: String,
+        required: false,
+      },
+      orderCustomerPhone: {
+        type: String,
+        required: true,
+        min: 10,
+        max: 10,
+      },
     },
-    orderOutlet: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Outlet",
-      required: true,
+    outlet: {
+      orderOutletID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Outlet",
+        required: true,
+      },
+      orderOutletName: {
+        type: String,
+        required: true,
+      },
     },
-    orderBrand: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: true,
+
+    brand: {
+      orderBrand: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: true,
+      },
+      orderBrandName: {
+        type: String,
+        requried: true,
+      },
     },
+
     orderPaymentMethod: {
       type: String,
       required: true,
@@ -50,6 +77,7 @@ var orders = new Schema(
     },
     orderPaymentStatus: {
       type: String,
+      enum: ["Pending", "Accepted", "Rejected", "Delivered"],
       required: true,
       min: 3,
     },
@@ -63,11 +91,7 @@ var orders = new Schema(
       required: true,
       min: 3,
     },
-    orderPaymentTime: {
-      type: String,
-      required: true,
-      min: 3,
-    },
+
     orderPaymentAmount: {
       type: Number,
       required: true,
@@ -80,21 +104,6 @@ var orders = new Schema(
     },
     orderPaymentFee: {
       type: Number,
-      required: true,
-      min: 3,
-    },
-    orderPaymentCustomerName: {
-      type: String,
-      required: true,
-      min: 3,
-    },
-    orderPaymentCustomerEmail: {
-      type: String,
-      required: true,
-      min: 3,
-    },
-    orderPaymentCustomerPhone: {
-      type: String,
       required: true,
       min: 3,
     },

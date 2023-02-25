@@ -20,18 +20,27 @@ const users = new Schema(
       required: true,
       enum: ["superadmin", "admin", "employee", "manager"],
     },
-    brandID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Brand",
-      required: false,
-      default: "",
+    brand: {
+      brandID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: false,
+      },
+      brandName: {
+        type: String,
+        requried: false,
+      },
     },
-    outletID: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Outlet",
-      //adding the required field if it is employee
-      required: false,
-      default: "",
+    outlet: {
+      outletID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Outlet",
+        required: false,
+      },
+      outletName: {
+        type: String,
+        required: false,
+      },
     },
     userName: {
       type: String,

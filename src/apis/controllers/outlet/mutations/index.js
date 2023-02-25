@@ -1,6 +1,8 @@
-const {createOutlet} = require("./createOutlet.outlet");
+const {createOutlet, getAllOutlets, getOutletByBrandID} = require("./createOutlet.outlet");
 
 module.exports= 
 {
-  createOutlet
+  createOutlet,
+  getAllOutlets,
+  getOutletByBrandID
 }

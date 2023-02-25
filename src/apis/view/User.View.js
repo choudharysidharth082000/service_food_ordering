@@ -7,15 +7,21 @@ const {
   findUsersJoinedLastMonth,
   findUsersJoinedLastWeek,
   findUserById,
+  findUserByBrandIDAndCheckEmployeeOutlet,
 } = require("../controllers/Auth/queries/user.queries");
 
-router.get("/allUsers", checkUserLogin, checkAdmin, findAllUsers);
+router.get("/allUsers", findAllUsers);
 router.get(
   "/usersJoinedLastWeek",
   checkUserLogin,
   checkAdmin,
   findUsersJoinedLastWeek
 );
+router.get(
+  "/userByBrandIDAndCheckEmployeeOutlet/:brandID",
+  findUserByBrandIDAndCheckEmployeeOutlet
+);
+
 router.get(
   "/usersJoinedLastMonth",
   checkUserLogin,

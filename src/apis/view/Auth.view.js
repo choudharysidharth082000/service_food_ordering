@@ -3,10 +3,18 @@ const express = require("express");
 
 const {
   signup,
+  login,
   deleteUser,
   updateUser,
 } = require("../controllers/Auth/mutations/signup.auth");
-const { checkAdmin, checkUserLogin } = require("../controllers/Auth/middlewares");
+const {
+  onlyAdmin,
+  onlyBrand,
+  onlyBrandAndManager,
+  onlySuperAdmin,
+  onlyadminAndSuperAdmin,
+  onlyManagerAdminAndSuperAdmin,
+} = require("../../middlewares/checkAdmin.middleware");
 const {
   findAllDeleted,
   findAllUsers,
@@ -17,26 +25,34 @@ const {
 
 const router = express.Router();
 
-router.get("/testAPI/checkUserLogin", checkUserLogin, (req, res) => {
+const passport = require("passport");
+
+router.get("/testAPI/checkUserLogin", (req, res) => {
   res.send("Hello world");
 });
-router.get(
-  "/session/checkUserLogin",
-  checkUserLogin,
-  checkAdmin,
-  (req, res) => {
-    res.send(req.session.passport.user.data);
-  }
-);
+router.get("/session/checkUserLogin", (req, res) => {
+  res.send(req.session.passport.user.data);
+});
 
-//route for the singup of the user
-router.post("/signup/:brandID/:outletID", checkUserLogin, checkAdmin, signup);
-router.delete("/deleteUser/:id", checkUserLogin, checkAdmin, deleteUser);
-router.put("/updateUser/:id", checkUserLogin, updateUser);
+//route for the singup of the user  which can be managed by admin super admin and manager
+router.post(
+  "/signup/:brandID/:outletID",
+  // passport.authenticate("jwt", { session: false }),
+  // onlyManagerAdminAndSuperAdmin,
+  signup
+);
+router.post("/login", login);
+router.delete("/deleteUser/:id", deleteUser);
+router.put("/updateUser/:id", updateUser);
 
 //get apis
-router.get("/getAllDeleted", checkUserLogin, checkAdmin, findAllDeleted);
-router.get("/getUsers", checkUserLogin, checkAdmin, findAllUsers);
-router.get("/getUsers/:id", checkUserLogin, findUserById);
+router.get("/getAllDeleted", findAllDeleted);
+router.get(
+  "/getUsers",
+  passport.authenticate("jwt", { session: false }),
+  onlyadminAndSuperAdmin,
+  findAllUsers
+);
+router.get("/getUsers/:id", findUserById);
 
 module.exports = router;
